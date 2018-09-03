@@ -33,28 +33,28 @@
  */
 var maxProfit = function(prices) {
   let max = 0;
-  let currentLow = prices[0];
-  let currentHigh = prices[0];
+    let currentLow = prices[0];
+    let currentHigh = prices[0];
 
-  for (let i = 0; i < prices.length; i++){
-    if (i == 0){
-      continue;
+    for (let i = 0; i < prices.length; i++) {
+        if (i == 0) {
+            continue;
+        }
+
+        let previousPrice = prices[i-1];
+
+        if (prices[i] < previousPrice) {
+            max += currentHigh - currentLow;
+            currentLow = prices[i];
+            currentHigh = prices[i];
+        } else if (prices[i] > previousPrice) {
+            currentHigh = prices[i];
+        }
+
+        if (i == prices.length - 1) {
+            max += currentHigh - currentLow;
+        }
     }
 
-    let prevPrice = prices[i - 1];
-
-    if (prices[i] < prevPrice){
-      max += currentHigh - currentLow;
-      currentLow = prices[i];
-      currentHigh = prices[i];
-    }else if (prices[i] > prevPrice){
-      currentHigh = prices[i];
-    }
-
-    if (i == prices.length - 1){
-    max += currentHigh - currentLow;
-    }
-  }
-
-  return max;
+    return max;
 };
