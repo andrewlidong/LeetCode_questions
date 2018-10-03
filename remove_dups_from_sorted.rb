@@ -36,3 +36,18 @@
 # for (int i = 0; i < len; i++) {
 #     print(nums[i]);
 # }
+
+
+# @param {Integer[]} nums
+# @return {Integer}
+def remove_duplicates(nums)
+    i = 0
+    while i < nums.length
+        if (nums[i] == nums[i+1])
+            nums.delete_at(i)
+        else
+            i += 1
+        end
+    end
+    return nums.length
+end

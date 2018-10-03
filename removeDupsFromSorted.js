@@ -42,22 +42,13 @@
  * @return {number}
  */
 var removeDuplicates = function(nums) {
-    if (nums.length <= 1) {
-        return nums.length;
-    }
-
-    currentPos = 1;
-    nextPos = 1;
-    prevAdd = nums[0];
-
-    while (nextPos < nums.length) {
-        if (prevAdd !== nums[nextPos]) {
-            nums[currentPos] = nums[nextPos];
-            prevAdd = nums[currentPos];
-            currentPos += 1;
+    let i = 0;
+    while (i < nums.length) {
+        if (nums[i] === nums[i+1]) {
+            nums.splice(i, 1);
+        } else {
+            i++;
         }
-        nextPos +=1;
     }
-
-    return currentPos;
+    return nums.length;
 };
