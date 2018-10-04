@@ -22,3 +22,30 @@
 // Input: [7,6,4,3,1]
 // Output: 0
 // Explanation: In this case, no transaction is done, i.e. max profit = 0.
+
+/**
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit = function(prices) {
+    let totalProfit = 0;
+    let currentProfit = 0;
+    let firstDayInfo = { price: prices[0], day: 0 };
+    let secondDayInfo = { price: prices[0], day: 0 };
+
+    for (let day = 1; day < prices.length; day++) {
+        let price = prices[day];
+        if (firstDayInfo.day < secondDayInfo.day && price < secondDayInfo.price) {
+            totalProfit += currentProfit;
+            firstDayInfo = { price, day };
+            secondDayInfo = { price, day };
+            currentProfit = 0;
+        }
+
+        if (price < firstDayInfo.price) firstDayInfo = { price, day };
+        if (price > secondDayInfo.price || secondDayInfo.day < firstDayInfo.day) secondDayInfo = { price, day };
+        if (firstDayInfo.day < secondDayInfo.day) currentProfit = secondDayInfo.price - firstDayInfo.price;
+    }
+    totalProfit += currentProfit;
+    return totalProfit;
+};

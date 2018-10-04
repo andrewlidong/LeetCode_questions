@@ -22,3 +22,29 @@
 # Input: [7,6,4,3,1]
 # Output: 0
 # Explanation: In this case, no transaction is done, i.e. max profit = 0.
+
+# @param {Integer[]} prices
+# @return {Integer}
+def max_profit(prices)
+    totalProfit = 0
+    currentProfit = 0
+    buyInfo = { price: prices.first, day: 0 }
+    sellInfo = { price: prices.first, day: 0 }
+    day = 1
+    while day < prices.length
+        price = prices[day]
+        if (price < sellInfo[:price] && buyInfo[:day] < sellInfo[:day])
+            totalProfit += currentProfit
+            buyInfo = { price: price, day: day }
+            sellInfo = { price: price, day: day }
+            currentProfit = 0
+        end
+
+        buyInfo = { price: price, day: day } if (price < buyInfo[:price])
+        sellInfo = { price: price, day: day } if (price > sellInfo[:price] || buyInfo[:day] > sellInfo[:day])
+        currentProfit = sellInfo[:price] - buyInfo[:price] if (buyInfo[:day] < sellInfo[:day])
+        day += 1
+    end
+    totalProfit += currentProfit
+    totalProfit
+end
