@@ -1,7 +1,3 @@
-# https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/
-#
-# Best Time to Buy and Sell Stock
-#
 # Say you have an array for which the ith element is the price of a given stock on day i.
 #
 # Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times).
@@ -26,30 +22,3 @@
 # Input: [7,6,4,3,1]
 # Output: 0
 # Explanation: In this case, no transaction is done, i.e. max profit = 0.
-
-# @param {Integer[]} prices
-# @return {Integer}
-def max_profit(prices)
-    output = 0
-    current_low = prices.first
-    current_high = prices.first
-
-    prices.each_with_index do |price, idx|
-        next if idx == 0
-        previous_price = prices[idx - 1]
-
-        if price < previous_price
-            output += current_high - current_low
-            current_low = price
-            current_high = price
-        elsif price > previous_price
-            current_high = price
-        end
-
-        output += current_high - current_low if idx == prices.length - 1
-    end
-
-    output
-end
-
-# 

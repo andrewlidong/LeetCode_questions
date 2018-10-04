@@ -1,7 +1,3 @@
-// https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/564/
-//
-// Best Time to Buy and Sell Stock II
-//
 // Say you have an array for which the ith element is the price of a given stock on day i.
 //
 // Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times).
@@ -26,35 +22,3 @@
 // Input: [7,6,4,3,1]
 // Output: 0
 // Explanation: In this case, no transaction is done, i.e. max profit = 0.
-
-/**
- * @param {number[]} prices
- * @return {number}
- */
-var maxProfit = function(prices) {
-  let max = 0;
-    let currentLow = prices[0];
-    let currentHigh = prices[0];
-
-    for (let i = 0; i < prices.length; i++) {
-        if (i == 0) {
-            continue;
-        }
-
-        let previousPrice = prices[i-1];
-
-        if (prices[i] < previousPrice) {
-            max += currentHigh - currentLow;
-            currentLow = prices[i];
-            currentHigh = prices[i];
-        } else if (prices[i] > previousPrice) {
-            currentHigh = prices[i];
-        }
-
-        if (i == prices.length - 1) {
-            max += currentHigh - currentLow;
-        }
-    }
-
-    return max;
-};
