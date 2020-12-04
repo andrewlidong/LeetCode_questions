@@ -1,5 +1,5 @@
 class Solution:
-    def removeELements(self, head: ListNode, val: int) -> ListNode:
+    def removeElements(self, head: ListNode, val: int) -> ListNode:
         sentinel = ListNode(0)
         sentinel.next = head
 
