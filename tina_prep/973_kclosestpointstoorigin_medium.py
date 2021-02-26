@@ -3,20 +3,47 @@ from heapq import *
 
 
 class Solution:
-    def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
-        maxHeap = []
-        # put first k points in the max heap
+    def kClosest(self, points, K):
+        """
+        :type points: List[List[int]]
+        :type K: int
+        :rtype: List[List[int]]
+        """
+        kClosestPointsToOrigin = []
+
+        # add first k points
         for i in range(K):
-            heappush(maxHeap, points[i])
+            heappush(kClosestPointsToOrigin,
+                     (-Solution.getDistanceFromOrigin(points[i]), points[i]))
 
-        # go through remaining points of the input array, if a point is closer to the origin than the top point of the max-heap, remove the top point from the heap and add the point from the input array
+        # maintain k closest in heap for the remaining points
         for i in range(K, len(points)):
-            if points[i][0] ** 2 + points[i][1]**2 < maxHeap[0][0] ** 2 + maxHeap[0][1] ** 2:
-                heappop(maxHeap)
-                heappush(maxHeap, points[i])
+            heappushpop(kClosestPointsToOrigin,
+                        (-Solution.getDistanceFromOrigin(points[i]), points[i]))
 
-        # the heap has 'k' points closest to the origin, return them in a list
-        return list(maxHeap)
+        # return each point in the heap
+        return [heappop(kClosestPointsToOrigin)[1] for _ in range(K)]
+
+    @staticmethod
+    def getDistanceFromOrigin(point):
+        return math.sqrt(point[0]**2 + point[1]**2)
+
+
+# class Solution:
+#     def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
+#         maxHeap = []
+#         # put first k points in the max heap
+#         for i in range(K):
+#             heappush(maxHeap, points[i])
+
+#         # go through remaining points of the input array, if a point is closer to the origin than the top point of the max-heap, remove the top point from the heap and add the point from the input array
+#         for i in range(K, len(points)):
+#             if points[i][0] **2 + points[i][1]**2 < maxHeap[0][0] **2 + maxHeap[0][1] **2:
+#                 heappop(maxHeap)
+#                 heappush(maxHeap, points[i])
+
+#         # the heap has 'k' points closest to the origin, return them in a list
+#         return list(maxHeap)
 
 # Time: O(NlogK)
 # Space: O(K)
@@ -57,10 +84,10 @@ class Solution:
 # the heap has k closest points to the origin, so return them in a list
 
 
-class Solution:
-    def kClosest(self, points, K):
-        points.sort(key=lambda P: P[0] ** 2 + P[1] ** 2)
-        return points[:K]
+# class Solution:
+#     def kClosest(self, points, K):
+#         points.sort(key= lambda P: P[0] ** 2 + P[1] ** 2)
+#         return points[:K]
 
 # Time: O(NlogN)
 # Space: O(N)
