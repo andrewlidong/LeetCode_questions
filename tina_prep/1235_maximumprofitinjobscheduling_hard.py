@@ -1,15 +1,13 @@
-class Solution:
-    def jobScheduling(self, startTime: List[int], endTime: List[int], profit: List[int]) -> int:
-        start, end, profit = zip(*sorted(zip(startTime, endTime, profit)))
-        jump = {i: bisect.bisect_left(
-            start, end[i]) for i in range(len(start))}
+# class Solution:
+#     def jobScheduling(self, startTime: List[int], endTime: List[int], profit: List[int]) -> int:
+#         start, end, profit = zip(*sorted(zip(startTime, endTime, profit)))
+#         jump = {i: bisect.bisect_left(start, end[i]) for i in range(len(start))}
 
-        def helper(i):
-            if i == len(start):
-                return 0
-            return max(helper(i + 1), profit[i] + helper(jump[i]))
+#         def helper(i):
+#             if i == len(start): return 0
+#             return max(helper(i + 1), profit[i] + helper(jump[i]))
 
-        return helper(0)
+#         return helper(0)
 
 # Time: O(nlogn) because bisect.bisect_left is a log(n) operation
 # Space: O(n)
@@ -26,14 +24,14 @@ class Solution:
 # you can either take the job for profit[i] + helper(jump[i])
 # or you can skip the job for helper(i + 1)
 
+class Solution:
+    def jobScheduling(self, start: List[int], end: List[int], profit: List[int]) -> int:
+        n = len(start)
+        start, end, profit = zip(*sorted(zip(start, end, profit)))
+        jump = {i: bisect.bisect_left(start, end[i]) for i in range(n)}
 
-# def jobScheduling(self, start: List[int], end: List[int], profit: List[int]) -> int:
-#     n = len(start)
-#     start, end, profit = zip(*sorted(zip(start, end, profit)))
-#     jump = {i: bisect.bisect_left(start, end[i]) for i in range(n)}
+        dp = [0 for _ in range(n + 1)]
+        for i in range(n - 1, -1, -1):
+            dp[i] = max(dp[i + 1], profit[i] + dp[jump[i]])
 
-#     dp = [0 for _ in range(n + 1)]
-#     for i in range(n - 1, -1, -1):
-#         dp[i] = max(dp[i + 1], profit[i] + dp[jump[i]])
-
-#     return dp[0]
+        return dp[0]
